@@ -10,11 +10,11 @@
 </head>
 
 <body>
-    {% ifnotequal user TEMPLATE_STRING_IF_INVALID %}
+    {% if user %}
     <div id="authbar">
         welcome, {{ user }} [ <a href="/logout">logout</a> ]
     </div>
-    {% endifnotequal %}
+    {% endif %}
 {% block content %}
 
 
