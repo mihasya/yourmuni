@@ -5,5 +5,9 @@ add a point
 {% endblock %}
 
 {% block content %}
-<p>adding a point!</p>
+<h2>add a new point</h2>
+<form action="/addpoint" method="POST">
+{{ form.as_p }}
+<input type="submit" value="add" />
+</form>
 {% endblock %}
