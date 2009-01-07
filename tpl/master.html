@@ -10,15 +10,11 @@
 </head>
 
 <body>
-    <div class="masterbar">
-        {% ifequal user TEMPLATE_STRING_IF_INVALID %}
-        welcome to yourmuni [ <a href="/login">login</a> ]
-        {% endifequal %}
-        
-        {% ifnotequal user TEMPLATE_STRING_IF_INVALID %}
+    {% ifnotequal user TEMPLATE_STRING_IF_INVALID %}
+    <div id="authbar">
         welcome, {{ user }} [ <a href="/logout">logout</a> ]
-        {% endifnotequal %}
     </div>
+    {% endifnotequal %}
 {% block content %}
 
 
