@@ -1,5 +1,4 @@
 from google.appengine.api import users
-from decorator import decorator
 from django.shortcuts import render_to_response
 from django.http import HttpResponseRedirect
     
