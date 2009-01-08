@@ -8,6 +8,6 @@ urlpatterns = patterns('',
     (r'^addstop/(?P<point_name>\d+)/(?P<route>\w)(?:\/)*$', 'views.addStop'),
     (r'^addstop/(?P<point_name>\d+)/(?P<route>\w)/(?P<direction>\w)(?:\/)*$', 'views.addStop'),
     (r'^addstop/(?P<point_name>\d+)/(?P<route>\w)/(?P<direction>\w)/(?P<stop>\w)(?:\/)*$', 'views.addStop'),
-    (r'^catch/(?P<point_name>\d+)(?:\/)*$', 'views.catch'),
+    (r'^catch/(?P<point_name>\w+)(?:\/)*$', 'views.catch'),
     (r'^(?:.*)', 'views.home'),
 )

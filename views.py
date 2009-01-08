@@ -3,6 +3,7 @@ from django.shortcuts import render_to_response
 from django.http import HttpResponseRedirect
 from models import *
 from forms import *
+import google.appengine.ext.db
 
 def render_with_user(tpl, vars={}):
     vars['user'] = users.get_current_user()
@@ -11,12 +12,10 @@ def render_with_user(tpl, vars={}):
 def home(r):    
     user = users.get_current_user()
     if (user):
-        #TODO: make this only get points for the current user
-        #figure out datastore API
-        pt = point()
-        points = pt.all()
-        #TODO: figure out how to display Query objects in templates
-        return render_with_user('user/home.html', {'points':points})
+        query = db.Query(point)
+        query.filter('user = ', user)
+        points_list = query.fetch(limit=200)
+        return render_with_user('user/home.html', {'points':points_list})
     else:
         return render_to_response('splash.html');
 
@@ -59,4 +58,9 @@ def addStop(r, point_name, route=None, direction=None, stop=None):
     params = {}
     return render_with_user('user/addstop.html', params)
     
-        
+@userRequired
+def catch(r, point_name):
+    params = {
+        'point_name': point_name,
+    }
+    return render_with_user('user/catch.html', params)

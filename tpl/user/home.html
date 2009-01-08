@@ -8,6 +8,10 @@ home
 <a href="/addpoint">add a point</a> | 
 
 <p>
-{{ points }}
+<ul>
+{% for point in points %}
+    <li><a href="/catch/{{ point.name }}">{{ point.desc }}</a></li>
+{% endfor %}
+</ul>
 </p>
 {% endblock %}
