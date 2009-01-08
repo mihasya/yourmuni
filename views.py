@@ -5,6 +5,12 @@ from models import *
 from forms import *
 import google.appengine.ext.db
 
+defaultSource='nb'
+
+def getDefaultSource():
+    """return the default source site for user (nextbus for now)"""
+    return defaultSource
+
 def render_with_user(tpl, vars={}):
     vars['user'] = users.get_current_user()
     return render_to_response(tpl, vars)
@@ -49,7 +55,8 @@ def addPoint(r):
             pt.name = form.cleaned_data['short_name']
             pt.desc = form.cleaned_data['name']
             pt.put()
-            return HttpResponseRedirect('/addstop/'+pt.name)
+            url = '/addstop/'+getDefaultSource()+'/'+pt.name+'/_dflt'
+            return HttpResponseRedirect(url)
     else:
         form = AddPointForm()
     return render_with_user('user/addpoint.html', {'form':form})
