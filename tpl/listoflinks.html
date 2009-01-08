@@ -1,0 +1,25 @@
+{% extends "master.html" %}
+
+{% block title %}
+{% if subtitle %}
+{{ subtitle }}
+{% else %}
+pick an item
+{% endif %}
+{% endblock %}
+
+{% block content %}
+{% if links %}
+<p>
+{% for link in links %}
+    <a href="{{ link.url }}">{{ link.title }}</a> |
+{% endfor %}
+</p>
+{% endif %}
+<ul>
+{% for item in items %}
+    <li><a href="{{ prefix }}/{{ item.url_piece }}">{{ item.title }}</a> {{ item.desc }}</li>
+{% endfor %}
+</ul>
+
+{% endblock %}
