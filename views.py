@@ -12,9 +12,9 @@ def render_with_user(tpl, vars={}):
 def home(r):    
     user = users.get_current_user()
     if (user):
-        query = db.Query(point)
-        query.filter('user = ', user)
-        points_list = query.fetch(limit=200)
+        q = db.Query(Point)
+        q.filter('user = ', user)
+        points_list = q.fetch(limit=200)
         return render_with_user('user/home.html', {'points':points_list})
     else:
         return render_to_response('splash.html');
@@ -44,7 +44,7 @@ def addPoint(r):
     if (r.method) == 'POST':
         form = AddPointForm(r.POST)
         if (form.is_valid()):
-            pt = point()
+            pt = Point()
             pt.user = users.get_current_user()
             pt.name = form.cleaned_data['short_name']
             pt.desc = form.cleaned_data['name']
