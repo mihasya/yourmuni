@@ -53,12 +53,7 @@ def addPoint(r):
     else:
         form = AddPointForm()
     return render_with_user('user/addpoint.html', {'form':form})
-    
-@userRequired 
-def addStop(r, point_name, route=None, direction=None, stop=None):
-    params = {}
-    return render_with_user('user/addstop.html', params)
-    
+        
 @userRequired
 def catch(r, point_name):
     params = {
