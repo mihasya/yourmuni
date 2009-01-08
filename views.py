@@ -49,6 +49,7 @@ def addPoint(r):
             pt.name = form.cleaned_data['short_name']
             pt.desc = form.cleaned_data['name']
             pt.put()
+            return HttpResponseRedirect('/addstop/'+pt.name)
     else:
         form = AddPointForm()
     return render_with_user('user/addpoint.html', {'form':form})
