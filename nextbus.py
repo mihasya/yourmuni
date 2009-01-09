@@ -29,5 +29,5 @@ def addStop(r, point_name, re=None, agency=None, route=None,
 
 @userRequired
 def addStopDflt(r, point_name):
-    urls = '/addstop/nb/'+point_name+'/'+getDefaultRegion()+'/'+getDefaultAgency()
-    return HttpResponseRedirect(urls)
+    url='/addstop/nb/'+point_name+'/'+getDefaultRegion()+'/'+getDefaultAgency()
+    return HttpResponseRedirect(url)
