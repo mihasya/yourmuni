@@ -101,3 +101,29 @@ def scrapeTime(agency, route, direction, stop):
         for span in spans:
             times.append(span.lstrip('&nbsp;'))
         return (times)
+        
+def getRegions():
+    """Get a listing of the regions
+    For now, just return the scrape. When I actually start using this, will
+    need to add caching"""
+    return scrapeRegions()
+    
+def getAgencies(region):
+    """TODO: add caching"""
+    return scrapeAgencies(region)
+    
+def getRoutes(agency):
+    """TODO: add caching"""
+    return scrapeRoutes(agency)
+    
+def getDirections(agency, route):
+    """TODO: add caching"""
+    return scrapeDirections(agency, route)
+    
+def getStops(agency, route, direction):
+    """TODO: add caching"""
+    return scrapeStops(agency, route, direction)
+    
+def getTime(agency, route, direction, stop):
+    """this won't need caching since we want the latest info"""
+    return scrapeTime(agency, route, direction, stop)
