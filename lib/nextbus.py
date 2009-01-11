@@ -92,6 +92,10 @@ def scrapeStops(agency, route, direction):
 def scrapeTime(agency, route, direction, stop):
     """the prediction page is not a list, so it gets its own scrape code"""
     url = timeURL % (agency, route, direction, stop)
+    return scrapeTimeURL(url)
+
+def scrapeTimeURL(url):
+    """the prediction page is not a list, so it gets its own scrape code"""
     result = urlfetch.fetch(url)
     if (result.status_code == 200):
         soup = BeautifulSoup(result.content)
@@ -139,3 +143,6 @@ def getStops(agency, route, direction):
 def getTime(agency, route, direction, stop):
     """this won't need caching since we want the latest info"""
     return scrapeTime(agency, route, direction, stop)
+
+def getTimeURL(url):
+    return scrapeTimeURL(url)
