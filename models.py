@@ -12,6 +12,4 @@ class Point(db.Model):
 class Stop(db.Model):
     point =         db.ReferenceProperty(Point)
     system =        db.StringProperty()
-    route =         db.StringProperty()
-    direction =     db.StringProperty()
-    stop_id =       db.StringProperty()
+    url =           db.StringProperty()
