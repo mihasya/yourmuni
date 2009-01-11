@@ -101,6 +101,8 @@ def scrapeTime(agency, route, direction, stop):
         for span in spans:
             times.append(span.lstrip('&nbsp;'))
         return (times)
+    else:
+        return False
         
 def getRegions():
     """Get a listing of the regions
