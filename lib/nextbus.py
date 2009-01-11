@@ -172,8 +172,23 @@ def getDirections(agency, route):
             return directions
     
 def getStops(agency, route, direction):
-    """TODO: add caching"""
-    return scrapeStops(agency, route, direction)
+    key = "stops_%s_%s_%s" % (agency, route, direction)
+    stops = memcache.get(key)
+    if (stops):
+        logging.info("Got stops from memcache")
+        return pickle.loads(stops)
+    else:
+        stops = scrapeStops(agency, route, direction)
+        if not (stops):
+            return False
+        else:
+            try:
+                logging.info("Saving stops to memcache")
+                value = pickle.dumps(stops)
+                memcache.set(key, value, 60*60*24)
+            except:
+                logging.error("FAIL: Saving stops to memcache")
+            return stops
     
 def getTime(agency, route, direction, stop):
     """this won't need caching since we want the latest info"""
