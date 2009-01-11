@@ -18,7 +18,7 @@ pick an item
 {% endif %}
 <ul>
 {% for item in items %}
-    <li><a href="{{ prefix }}/{{ item.url_piece }}">{{ item.title }}</a> {{ item.desc }}</li>
+    <li><a href="{{ prefix }}/{{ item.url_piece }}">{{ item.title|safe }}</a> {{ item.desc|safe }}</li>
 {% endfor %}
 </ul>
 
