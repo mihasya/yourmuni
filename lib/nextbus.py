@@ -157,6 +157,7 @@ def getDirections(agency, route):
     directions = memcache.get(key)
     if (directions):
         logging.info("Got directions from memcache")
+        return pickle.loads(directions)
     else:
         directions = scrapeDirections(agency, route)
         if not (directions):
