@@ -1,6 +1,11 @@
 from google.appengine.api import urlfetch
 from BeautifulSoup import BeautifulSoup
+from google.appengine.api import memcache
 import re
+import cPickle as pickle
+import logging
+from sys import setrecursionlimit
+setrecursionlimit(4000)
 
 agencyURL = "http://www.nextbus.com/wireless/miniAgency.shtml?re=%s"
 routeURL = "http://www.nextbus.com/wireless/miniRoute.shtml?a=%s"
@@ -129,8 +134,23 @@ def getAgencies(region):
     return scrapeAgencies(region)
     
 def getRoutes(agency):
-    """TODO: add caching"""
-    return scrapeRoutes(agency)
+    key = "routes_%s" % (agency)
+    routes = memcache.get(key)
+    if (routes):
+        logging.info("Got routes from memcache")
+        return pickle.loads(routes)
+    else:
+        routes = scrapeRoutes(agency)
+        if (routes is None):
+            return False
+        else:
+            try:
+                logging.info("Saving routes to memcache")
+                value = pickle.dumps(routes)
+                memcache.set(key, value, 60*60*24)
+            except:
+                logging.error("FAIL: Saving routes to memcache")
+            return routes
     
 def getDirections(agency, route):
     """TODO: add caching"""
