@@ -73,7 +73,7 @@ def scrapeList(url):
             pairs[key] = innerHTML
         return pairs
     else:
-        return false
+        return False
         
 def scrapeRegions():
     return regions
@@ -141,7 +141,7 @@ def getRoutes(agency):
         return pickle.loads(routes)
     else:
         routes = scrapeRoutes(agency)
-        if (routes is None):
+        if not (routes):
             return False
         else:
             try:
@@ -153,8 +153,22 @@ def getRoutes(agency):
             return routes
     
 def getDirections(agency, route):
-    """TODO: add caching"""
-    return scrapeDirections(agency, route)
+    key = "directions_%s_%s" % (agency, route)
+    directions = memcache.get(key)
+    if (directions):
+        logging.info("Got directions from memcache")
+    else:
+        directions = scrapeDirections(agency, route)
+        if not (directions):
+            return False
+        else:
+            try:
+                logging.info("Saving directions to memcache")
+                value = pickle.dumps(directions)
+                memcache.set(key, value, 60*60*24)
+            except:
+                logging.error("FAIL: Saving directions to memcache")
+            return directions
     
 def getStops(agency, route, direction):
     """TODO: add caching"""
