@@ -95,12 +95,22 @@ def scrapeTime(agency, route, direction, stop):
     result = urlfetch.fetch(url)
     if (result.status_code == 200):
         soup = BeautifulSoup(result.content)
+        infoTable = soup.body.center.font.findAll('table', recursive=False)[0]
+        route = infoTable.findAll('font', text=re.compile('Route'))[0] \
+                .findNext('b').string
+        stop = infoTable.findAll('font', text=re.compile('Stop'))[0] \
+            .findNext('b').string
         spans = soup.body.center.font.findAll('table', recursive=False)[1] \
             .findAll('span', text=re.compile('&nbsp;(\d)'))
         times = []
         for span in spans:
             times.append(span.lstrip('&nbsp;'))
-        return (times)
+        response = {
+            'route': route,
+            'stop': stop,
+            'times': times
+        }
+        return (response)
     else:
         return False
         
