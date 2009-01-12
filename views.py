@@ -4,6 +4,7 @@ from django.http import HttpResponseRedirect
 from models import *
 from forms import *
 import google.appengine.ext.db
+from lib import nextbus
 
 defaultSource='nb'
 
@@ -63,7 +64,17 @@ def addPoint(r):
         
 @userRequired
 def catch(r, point_name):
+    q = db.Query(Point)
+    q.filter('name =', point_name)
+    p = q.get()
+    q = db.Query(Stop)
+    q.filter('point = ', p)
+    stops = []
+    for row in q:
+        aStop = nextbus.getTimeURL(row.url)
+        stops.append(nextbus.getTimeURL(row.url).values())
     params = {
-        'point_name': point_name,
+        'point_name': p.desc,
+        'stops': stops
     }
     return render_with_user('user/catch.html', params)

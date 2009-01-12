@@ -5,8 +5,20 @@ catching '{{ point_name }}'
 {% endblock %}
 
 {% block content %}
+<h2>{{ point_name }}</h2>
 <a href="/addstop/nb/{{ point_name }}/_dflt">add a stop</a>
 <p>
-OMG LISTING HERE!
+<ul>
+{% for route, stop, times in stops %}
+    <li>
+    <h3>{{ route }}/{{ stop }}</h3>
+    {% for time in times %}
+    {{ time }}{% if not forloop.last %}, {% else %} minutes{% endif %}
+    {% empty %}
+    No times available
+    {% endfor %}
+    </li>
+{% endfor %}
+</ul>
 </p>
 {% endblock %}
