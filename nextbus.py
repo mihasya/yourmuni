@@ -26,13 +26,15 @@ def addStop(r, point_name, re=None, agency=None, route=None,
         data = nextbus.getStops(agency, route, direction)
         prefix = '/addstop/nb/%s/%s/%s/%s/%s'\
             % (point_name, re, agency, route, direction)
+        subtitle = 'pick a stop'
     elif (route is not None):
         data = nextbus.getDirections(agency, route)
         prefix = '/addstop/nb/%s/%s/%s/%s' % (point_name, re, agency, route)
+        subtitle = 'pick a direction'
     elif (agency is not None):
         data = nextbus.getRoutes(agency)
         prefix = '/addstop/nb/%s/%s/%s' % (point_name, re, agency)
-
+        subtitle = 'pick a route'
     items = []
     if not (data):
         #todo: throw 500
@@ -40,7 +42,8 @@ def addStop(r, point_name, re=None, agency=None, route=None,
     for key in data:
         items.append({'url_piece': key, 'title': data[key]})
     params = { 'items':items,
-           'prefix': prefix }
+               'prefix': prefix,
+               'subtitle': subtitle }
     return render_with_user('listoflinks.html', params)
 
 @userRequired
