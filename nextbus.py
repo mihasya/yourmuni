@@ -40,6 +40,7 @@ def addStop(r, point_name, re=None, agency=None, route=None,
             stopObj = Stop()
             stopObj.point = p
             stopObj.url = url
+            stopObj.system = "nextbus"
             stopObj.put()
             #todo: redirect to point edit page
     if (direction is not None):
