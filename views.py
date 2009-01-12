@@ -22,7 +22,9 @@ def home(r):
         q = db.Query(Point)
         q.filter('user = ', user)
         points_list = q.fetch(limit=200)
-        return render_with_user('user/home.html', {'points':points_list})
+        links = [ { 'url':'/addpoint', 'title':'add a point' } ]
+        param = { 'points': points_list, 'links': links }
+        return render_with_user('user/home.html', param)
     else:
         return render_to_response('splash.html');
 

@@ -1,3 +1,38 @@
 body {
-
+    font-family: Arial, Verdana, 'Sans Serif', Sans;
+    margin: 0;
+}
+a {
+    color: inherit;
+}
+ul {
+    margin: 0;
+    padding: 0;
+    border-top: 1px solid #dfdfdf;
+}
+ul li {
+    list-style: none;
+    border-bottom: 1px solid #dfdfdf;
+}
+ul li a {
+    padding: 1em;
+    text-decoration: none;
+    width: 90%;
+    display: block;
+    font-weight: bold;
+    outline: 0;
+}
+#authbar {
+    padding: .5em 1em;
+    background: #444444;
+    color: #dfdfdf;
+}
+#navbar {
+    background: #dfdfdf;
+    color: #444444;
+    padding: 0 1em;
+}
+#navbar a {
+    line-height: 2em;
+    padding: .5em 0;
 }

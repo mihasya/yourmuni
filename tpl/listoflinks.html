@@ -9,13 +9,6 @@ pick an item
 {% endblock %}
 
 {% block content %}
-{% if links %}
-<p>
-{% for link in links %}
-    <a href="{{ link.url }}">{{ link.title }}</a> |
-{% endfor %}
-</p>
-{% endif %}
 <ul>
 {% for item in items %}
     <li><a href="{{ prefix }}/{{ item.url_piece }}">{{ item.title|safe }}</a> {{ item.desc|safe }}</li>
