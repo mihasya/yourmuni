@@ -11,6 +11,8 @@ class AddPointForm(forms.Form):
     def clean_name(self):
         #verify that the short_name is unique
         value = self.cleaned_data['name']
+        if (value.find(' ')!=-1):
+            raise forms.ValidationError(_("Name shouldn't contain spaces"))
         q = db.Query(Point)
         q.filter('name =', value)
         q.filter('user =', users.get_current_user())
