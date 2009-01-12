@@ -109,11 +109,14 @@ def scrapeTimeURL(url):
                 .findNext('b').string
         stop = infoTable.findAll('font', text=re.compile('Stop'))[0] \
             .findNext('b').string
-        spans = soup.body.center.font.findAll('table', recursive=False)[1] \
-            .findAll('span', text=re.compile('&nbsp;(\d)'))
-        times = []
-        for span in spans:
-            times.append(span.lstrip('&nbsp;'))
+        try:
+            spans = soup.body.center.font.findAll('table', recursive=False)[1] \
+                .findAll('span', text=re.compile('&nbsp;(\d)'))
+            times = []
+            for span in spans:
+                times.append(span.lstrip('&nbsp;'))
+        except:
+            times = None
         response = {
             'route': route,
             'stop': stop,
