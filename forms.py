@@ -5,12 +5,12 @@ from django.utils.translation import ugettext_lazy as _
 from google.appengine.api import users
 
 class AddPointForm(forms.Form):
-    name = forms.CharField(max_length=255)
-    short_name = forms.CharField(max_length=50)
+    name = forms.CharField(max_length=50)
+    description = forms.CharField(max_length=255)
     
-    def clean_short_name(self):
+    def clean_name(self):
         #verify that the short_name is unique
-        value = self.cleaned_data['short_name']
+        value = self.cleaned_data['name']
         q = db.Query(Point)
         q.filter('name =', value)
         q.filter('user =', users.get_current_user())

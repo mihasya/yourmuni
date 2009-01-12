@@ -52,8 +52,8 @@ def addPoint(r):
         if (form.is_valid()):
             pt = Point()
             pt.user = users.get_current_user()
-            pt.name = form.cleaned_data['short_name']
-            pt.desc = form.cleaned_data['name']
+            pt.name = form.cleaned_data['name']
+            pt.desc = form.cleaned_data['description']
             pt.put()
             url = '/addstop/'+getDefaultSource()+'/'+pt.name+'/_dflt'
             return HttpResponseRedirect(url)
