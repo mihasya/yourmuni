@@ -1,11 +1,11 @@
 {% extends "master.html" %}
 
 {% block title %}
-catching '{{ point_name }}'
+catching '{{ point_desc }}'
 {% endblock %}
 
 {% block content %}
-<h2>{{ point_name }}</h2>
+<h2>{{ point_desc }}</h2>
 <a href="/addstop/nb/{{ point_name }}/_dflt">add a stop</a>
 <p>
 <ul>
@@ -13,7 +13,14 @@ catching '{{ point_name }}'
     <li>
     <h3>{{ route }}/{{ stop }}</h3>
     {% for time in times %}
-    {{ time }}{% if not forloop.last %}, {% else %} minutes{% endif %}
+    {% if forloop.first %}
+        <strong>{{ time }}</strong>
+    {% else %}
+        , {{ time }}
+    {% endif %}
+    {% if forloop.last %}
+        minutes
+    {% endif %}
     {% empty %}
     No times available
     {% endfor %}

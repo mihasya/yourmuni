@@ -74,7 +74,8 @@ def catch(r, point_name):
         aStop = nextbus.getTimeURL(row.url)
         stops.append(nextbus.getTimeURL(row.url).values())
     params = {
-        'point_name': p.desc,
+        'point_name': p.name,
+        'point_desc': p.desc,
         'stops': stops
     }
     return render_with_user('user/catch.html', params)
