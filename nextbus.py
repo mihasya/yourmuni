@@ -42,7 +42,8 @@ def addStop(r, point_name, re=None, agency=None, route=None,
             stopObj.url = url
             stopObj.system = "nextbus"
             stopObj.put()
-            #todo: redirect to point edit page
+            #TODO: redirect to an edit page that doesnt involve the scrape
+            return HttpResponseRedirect('/catch/%s' % (point_name))
     if (direction is not None):
         data = nextbus.getStops(agency, route, direction)
         prefix = '/addstop/nb/%s/%s/%s/%s/%s'\
