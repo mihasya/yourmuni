@@ -85,3 +85,12 @@ def catch(r, bmark):
         'links': links
     }
     return render_with_user('user/catch.html', params)
+
+@userRequired
+def clearCache(r):
+    import logging
+    from google.appengine.api import memcache
+    if users.is_current_user_admin():
+        logging.info("Flushing Cache")
+        memcache.flush_all()
+    return home(r)

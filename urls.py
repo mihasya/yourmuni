@@ -12,5 +12,6 @@ urlpatterns = patterns('',
     (r'^addstop/nb/(?P<bmark>\w+?)/(?P<re>[\w|-]+?)/(?P<agency>[\w|-]+?)/(?P<route>[\w|-]+?)/(?P<direction>[\w|-]+?)(?:\/)*$', 'nextbus.addStop'),
     (r'^addstop/nb/(?P<bmark>\w+?)/(?P<re>[\w|-]+?)/(?P<agency>[\w|-]+?)/(?P<route>[\w|-]+?)/(?P<direction>[\w|-]+?)/(?P<stop>[\w|-]+?)(?:\/)*$', 'nextbus.addStop'),
     (r'^catch/(?P<bmark>\w+)(?:\/)*$', 'views.catch'),
+    (r'^clear-cache$', 'views.clearCache'),
     (r'^(?:.*)', 'views.home'),
 )
