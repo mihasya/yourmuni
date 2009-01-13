@@ -19,11 +19,11 @@ def render_with_user(tpl, vars={}):
 def home(r):    
     user = users.get_current_user()
     if (user):
-        q = db.Query(Point)
+        q = db.Query(Bmark)
         q.filter('user = ', user)
-        points_list = q.fetch(limit=200)
-        links = [ { 'url':'/addpoint', 'title':'add a point' } ]
-        param = { 'points': points_list, 'links': links }
+        bmarks = q.fetch(limit=200)
+        links = [ { 'url':'/addbmark', 'title':'add a bookmark' } ]
+        param = { 'bmarks': bmarks, 'links': links }
         return render_with_user('user/home.html', param)
     else:
         return render_to_response('splash.html');
@@ -49,38 +49,38 @@ def userRequired(fn):
     return new
 
 @userRequired    
-def addPoint(r):
+def addBmark(r):
     if (r.method) == 'POST':
-        form = AddPointForm(r.POST)
+        form = AddBmarkForm(r.POST)
         if (form.is_valid()):
-            pt = Point()
-            pt.user = users.get_current_user()
-            pt.name = form.cleaned_data['name']
-            pt.desc = form.cleaned_data['description']
-            pt.put()
-            url = '/addstop/'+getDefaultSource()+'/'+pt.name+'/_dflt'
+            bm = Bmark()
+            bm.user = users.get_current_user()
+            bm.name = form.cleaned_data['name']
+            bm.desc = form.cleaned_data['description']
+            bm.put()
+            url = '/addstop/'+getDefaultSource()+'/'+bm.name+'/_dflt'
             return HttpResponseRedirect(url)
     else:
-        form = AddPointForm()
-    return render_with_user('user/addpoint.html', {'form':form})
+        form = AddBmarkForm()
+    return render_with_user('user/addbmark.html', {'form':form})
         
 @userRequired
-def catch(r, point_name):
-    q = db.Query(Point)
-    q.filter('name =', point_name)
-    p = q.get()
+def catch(r, bmark):
+    q = db.Query(Bmark)
+    q.filter('name =', bmark)
+    bm = q.get()
     q = db.Query(Stop)
-    q.filter('point = ', p)
+    q.filter('bmark = ', bm)
     stops = []
     for row in q:
         aStop = nextbus.getTimeURL(row.url)
         stops.append(nextbus.getTimeURL(row.url).values())
 
-    links = [ { 'url':'/addstop/nb/%s/_dflt' % (point_name), 'title':'add a stop' } ]
+    links = [ { 'url':'/addstop/nb/%s/_dflt' % (bmark), 'title':'add a stop' } ]
 
     params = {
-        'point_name': p.name,
-        'point_desc': p.desc,
+        'bmark_name': bm.name,
+        'bmark_desc': bm.desc,
         'stops': stops,
         'links': links
     }

@@ -2,7 +2,7 @@ from views import userRequired, render_with_user
 from django.http import HttpResponseRedirect
 from lib import nextbus
 import google.appengine.ext.db as db
-from models import Point, Stop
+from models import Bmark, Stop
 import logging
 
 defaultRegion='California-Northern'
@@ -20,16 +20,16 @@ def getDefaultAgency():
 
 
 @userRequired 
-def addStop(r, point_name, re=None, agency=None, route=None, 
+def addStop(r, bmark, re=None, agency=None, route=None, 
                                                     direction=None, stop=None):
     error = ''
     if (stop is not None):
         url = nextbus.timeURL % (agency, route, direction, stop)
-        q = db.Query(Point)
-        q.filter('name = ', point_name)
-        p = q.get()
+        q = db.Query(Bmark)
+        q.filter('name = ', bmark)
+        b = q.get()
         q = db.Query(Stop)
-        q.filter('point = ', p)
+        q.filter('bmark = ', b)
         q.filter('url = ', url)
         stopObj = q.get()
         logging.info(stopObj)
@@ -38,24 +38,24 @@ def addStop(r, point_name, re=None, agency=None, route=None,
             error = "This stop has already been added"
         else:
             stopObj = Stop()
-            stopObj.point = p
+            stopObj.bmark = b
             stopObj.url = url
             stopObj.system = "nextbus"
             stopObj.put()
             #TODO: redirect to an edit page that doesnt involve the scrape
-            return HttpResponseRedirect('/catch/%s' % (point_name))
+            return HttpResponseRedirect('/catch/%s' % (bmark))
     if (direction is not None):
         data = nextbus.getStops(agency, route, direction)
         prefix = '/addstop/nb/%s/%s/%s/%s/%s'\
-            % (point_name, re, agency, route, direction)
+            % (bmark, re, agency, route, direction)
         subtitle = 'pick a stop'
     elif (route is not None):
         data = nextbus.getDirections(agency, route)
-        prefix = '/addstop/nb/%s/%s/%s/%s' % (point_name, re, agency, route)
+        prefix = '/addstop/nb/%s/%s/%s/%s' % (bmark, re, agency, route)
         subtitle = 'pick a direction'
     elif (agency is not None):
         data = nextbus.getRoutes(agency)
-        prefix = '/addstop/nb/%s/%s/%s' % (point_name, re, agency)
+        prefix = '/addstop/nb/%s/%s/%s' % (bmark, re, agency)
         subtitle = 'pick a route'
     items = []
     if not (data):
@@ -70,6 +70,6 @@ def addStop(r, point_name, re=None, agency=None, route=None,
     return render_with_user('listoflinks.html', params)
 
 @userRequired
-def addStopDflt(r, point_name):
-    url='/addstop/nb/'+point_name+'/'+getDefaultRegion()+'/'+getDefaultAgency()
+def addStopDflt(r, bmark):
+    url='/addstop/nb/'+bmark+'/'+getDefaultRegion()+'/'+getDefaultAgency()
     return HttpResponseRedirect(url)

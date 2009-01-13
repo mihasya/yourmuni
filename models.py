@@ -4,12 +4,12 @@ class UserProfile(db.Model):
     user =          db.UserProperty()
     location =      db.StringProperty()
 
-class Point(db.Model):
+class Bmark(db.Model):
     name =          db.StringProperty()
     desc =          db.StringProperty()
     user =          db.UserProperty()
 
 class Stop(db.Model):
-    point =         db.ReferenceProperty(Point)
+    bmark =         db.ReferenceProperty(Bmark)
     system =        db.StringProperty()
     url =           db.StringProperty()

@@ -1,0 +1,17 @@
+{% extends "master.html" %}
+
+{% block title %}
+add a new bookmark
+{% endblock %}
+
+{% block content %}
+<h2>add a new bookmark</h2>
+<p>
+    <em>Name</em> should be a short meaningful tag for the bookmark (no spaces)<br />
+    <em>Description</em> is how your your bookmark will be identified in the interface
+</p>
+<form action="/addbmark" method="POST">
+{{ form.as_p }}
+<p><input type="submit" value="add" /></p>
+</form>
+{% endblock %}

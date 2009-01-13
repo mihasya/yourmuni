@@ -7,10 +7,10 @@ home
 {% block content %}
 
 <ul>
-{% for point in points %}
-    <li><a href="/catch/{{ point.name }}">{{ point.desc }}</a></li>
+{% for bmark in bmarks %}
+    <li><a href="/catch/{{ bmark.name }}">{{ bmark.desc }}</a></li>
 {% empty %}
-    <p>You haven't defined any points yet. <a href="/addpoint">Get started!</a></p>
+    <p>You haven't defined any bookmarks yet. <a href="/addbmark">Get started!</a></p>
 {% endfor %}
 </ul>
 

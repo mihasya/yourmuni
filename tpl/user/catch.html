@@ -1,11 +1,11 @@
 {% extends "master.html" %}
 
 {% block title %}
-catching '{{ point_desc }}'
+catching '{{ bmark_desc }}'
 {% endblock %}
 
 {% block content %}
-<h2>{{ point_desc }}</h2>
+<h2>{{ bmark_desc }}</h2>
 <p>
 <ul>
 {% for route, stop, times in stops %}
