@@ -198,4 +198,19 @@ def getTime(agency, route, direction, stop):
     return scrapeTime(agency, route, direction, stop)
 
 def getTimeURL(url):
-    return scrapeTimeURL(url)
+    key = "time_%s" % url
+    times = memcache.get(key)
+    if (times):
+        return times
+    else:
+        times = scrapeTimeURL(url)
+        if not (times):
+            return False
+        else:
+            try:
+                logging.info("Saving time to memcache")
+                value = pickle.dumps(times)
+                memcache.set(key, value, 15)
+            except:
+                logging.error("FAIL:Saving time to memcache")
+            return times
