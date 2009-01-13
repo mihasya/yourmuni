@@ -76,7 +76,8 @@ def catch(r, bmark):
         aStop = nextbus.getTimeURL(row.url)
         stops.append(nextbus.getTimeURL(row.url).values())
 
-    links = [ { 'url':'/addstop/nb/%s/_dflt' % (bmark), 'title':'add a stop' } ]
+    links = [ { 'url':'/addstop/nb/%s/_dflt' % (bmark), 'title':'add a stop' },
+              { 'url':'/catch/%s' % bmark, 'title':'reload'}]
 
     params = {
         'bmark_name': bm.name,
