@@ -61,8 +61,8 @@ def addStop(r, point_name, re=None, agency=None, route=None,
     if not (data):
         #todo: throw 500
         return False
-    for key in data:
-        items.append({'url_piece': key, 'title': data[key]})
+    for key, value in data:
+        items.append({'url_piece': key, 'title': value})
     params = { 'items':items,
                'prefix': prefix,
                'subtitle': subtitle,

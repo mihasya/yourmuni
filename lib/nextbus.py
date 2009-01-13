@@ -48,7 +48,7 @@ def scrapeList(url):
     if (result.status_code == 200):
         soup = BeautifulSoup(result.content)
         links = soup.html.body.findAll('a')
-        pairs = {}
+        pairs = []
         for x in links:
             #verify that the link is something we want, in case nextbus adds
             #stupid links to their pages
@@ -70,7 +70,7 @@ def scrapeList(url):
                     child = child.contents[0]
             except AttributeError:
                 innerHTML = lastChild.string
-            pairs[key] = innerHTML
+            pairs.append([key,innerHTML])
         return pairs
     else:
         return False
