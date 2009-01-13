@@ -11,10 +11,14 @@
 </head>
 
 <body>
-    {% if user %}
     <div id="authbar">
-        welcome, {{ user }} [ <a href="/logout">logout</a> ]
+        {% if user %}
+        welcome, {{ user }} [ <a href="/logout">log out</a> ]
+        {% else %}
+        welcome, stranger! [ <a href="/login">log in</a> ]
+        {% endif %}
     </div>
+
     {% if links %}
     <div id="navbar">
     {% for link in links %}
@@ -25,8 +29,7 @@
     {% endfor %}
     </div>
     {% endif %}
-    
-    {% endif %}
+
     {% if error %}
     <div class="error">{{ error }}</div>
     {% endif %}
