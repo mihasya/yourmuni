@@ -24,7 +24,6 @@ ul li a {
     text-decoration: none;
     display: block;
     font-weight: bold;
-    outline: 0;
 }
 #authbar {
     padding: .5em 1em;
