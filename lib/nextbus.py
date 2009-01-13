@@ -111,7 +111,7 @@ def scrapeTimeURL(url):
             .findNext('b').string
         try:
             spans = soup.body.center.font.findAll('table', recursive=False)[1] \
-                .find('tr').findAll('span', text=re.compile('&nbsp;(\d)'))
+            .find('tr').findAll('span', text=re.compile('&nbsp;(\d+|[A-Z]\w+)'))
             times = []
             for span in spans:
                 times.append(span.lstrip('&nbsp;'))
