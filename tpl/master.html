@@ -19,13 +19,17 @@
         {% endif %}
     </div>
 
-    {% if links %}
+
     <div id="navbar">
+    {% if user %}
+        <a href="/">home</a>
+    {% endif %}
+    {% if links %}
     {% for link in links %}
         <a href="{{ link.url }}">{{ link.title }}</a>
     {% endfor %}
-    </div>
     {% endif %}
+    </div>
 
     {% if error %}
     <div class="error">{{ error }}</div>
