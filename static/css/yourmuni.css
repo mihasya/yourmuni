@@ -36,5 +36,7 @@ ul li a {
 }
 #navbar a {
     line-height: 2em;
-    padding: .5em 0;
+    padding: .25em .5em;
+    background-color: #c0c0c0;
+    text-decoration: none;
 }
