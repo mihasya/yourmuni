@@ -45,3 +45,8 @@ ul li a {
     background-color: #c0c0c0;
     text-decoration: none;
 }
+#error {
+    background: #ffcccc;
+    color: #880000;
+    padding: .5em 1em;
+}
