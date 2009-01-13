@@ -2,6 +2,10 @@ body {
     font-family: Arial, Verdana, 'Sans Serif', Sans;
     margin: 0;
 }
+input[type="text"] {
+    font-size: 112.5%;
+    padding: 0 .125em;
+}
 p, h1, h2, h3 {
     padding: 0 1em;
     margin-left: 0;
