@@ -72,9 +72,13 @@ def catch(r, bmark):
     q = db.Query(Stop)
     q.filter('bmark = ', bm)
     stops = []
+    error = None
     for row in q:
-        aStop = nextbus.getTimeURL(row.url)
-        stops.append(nextbus.getTimeURL(row.url).values())
+        stopInfo = nextbus.getTimeURL(row.url)
+        if (stopInfo):
+            stops.append(stopInfo)
+        else:
+            error = "Some stops could not be retreived"
 
     links = [ { 'url':'/addstop/nb/%s/_dflt' % (bmark), 'title':'add a stop' },
               { 'url':'/catch/%s' % bmark, 'title':'reload'}]
@@ -83,7 +87,8 @@ def catch(r, bmark):
         'bmark_name': bm.name,
         'bmark_desc': bm.desc,
         'stops': stops,
-        'links': links
+        'links': links,
+        'error': error
     }
     return render_with_user('user/catch.html', params)
 
