@@ -9,6 +9,8 @@ home
 <ul>
 {% for point in points %}
     <li><a href="/catch/{{ point.name }}">{{ point.desc }}</a></li>
+{% empty %}
+    <p>You haven't defined any points yet. <a href="/addpoint">Get started!</a></p>
 {% endfor %}
 </ul>
 
