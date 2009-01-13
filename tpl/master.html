@@ -23,9 +23,6 @@
     <div id="navbar">
     {% for link in links %}
         <a href="{{ link.url }}">{{ link.title }}</a>
-        {% if not forloop.last %}
-            | 
-        {% endif %}
     {% endfor %}
     </div>
     {% endif %}
