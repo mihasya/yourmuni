@@ -8,11 +8,11 @@ catching '{{ bmark_desc }}'
 <h2>{{ bmark_desc }}</h2>
 <p>
 <ul>
-{% for route, stop, times in stops %}
+{% for stop in stops %}
     <li>
         <p>
-            <strong>{{ route }} @ {{ stop }}</strong><br />
-            {% for time in times %}
+            <strong>{{ stop.route }} @ {{ stop.stop }}</strong><br />
+            {% for time in stop.times %}
             {% if forloop.first %}
                 <strong>{{ time }}</strong>
             {% else %}

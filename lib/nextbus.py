@@ -204,7 +204,8 @@ def getTimeURL(url):
     key = "time_%s" % url
     times = memcache.get(key)
     if (times):
-        return times
+        logging.info("Got time from memcache")
+        return pickle.loads(times)
     else:
         times = scrapeTimeURL(url)
         if not (times):
