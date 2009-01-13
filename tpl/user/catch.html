@@ -10,19 +10,21 @@ catching '{{ point_desc }}'
 <ul>
 {% for route, stop, times in stops %}
     <li>
-    <h3>{{ route }}/{{ stop }}</h3>
-    {% for time in times %}
-    {% if forloop.first %}
-        <strong>{{ time }}</strong>
-    {% else %}
-        , {{ time }}
-    {% endif %}
-    {% if forloop.last %}
-        minutes
-    {% endif %}
-    {% empty %}
-    No times available
-    {% endfor %}
+        <p>
+            <strong>{{ route }} @ {{ stop }}</strong><br />
+            {% for time in times %}
+            {% if forloop.first %}
+                <strong>{{ time }}</strong>
+            {% else %}
+                , {{ time }}
+            {% endif %}
+            {% if forloop.last %}
+                minutes
+            {% endif %}
+            {% empty %}
+            No times available
+            {% endfor %}
+        </p>
     </li>
 {% endfor %}
 </ul>

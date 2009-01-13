@@ -4,6 +4,8 @@ body {
 }
 p, h1, h2, h3 {
     padding: 0 1em;
+    margin-left: 0;
+    margin-right: 0;
 }
 a {
     color: inherit;
