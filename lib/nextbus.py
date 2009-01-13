@@ -101,7 +101,10 @@ def scrapeTime(agency, route, direction, stop):
 
 def scrapeTimeURL(url):
     """the prediction page is not a list, so it gets its own scrape code"""
-    result = urlfetch.fetch(url)
+    try:
+        result = urlfetch.fetch(url)
+    except:
+        return False
     if (result.status_code == 200):
         soup = BeautifulSoup(result.content)
         infoTable = soup.body.center.font.findAll('table', recursive=False)[0]
