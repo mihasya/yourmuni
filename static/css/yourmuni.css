@@ -2,6 +2,9 @@ body {
     font-family: Arial, Verdana, 'Sans Serif', Sans;
     margin: 0;
 }
+p, h1, h2, h3 {
+    padding: 0 1em;
+}
 a {
     color: inherit;
 }
