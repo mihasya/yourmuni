@@ -54,5 +54,6 @@ ul li a {
     border: none;
 }
 a.action {
+    font-weight: normal;
     float: right;
 }
