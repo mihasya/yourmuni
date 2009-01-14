@@ -7,11 +7,14 @@ import re
 
 class AddBmarkForm(forms.Form):
     name = forms.CharField(max_length=50, required=False)
-    description = forms.CharField(max_length=255)
+    description = forms.CharField(max_length=255, required=True)
 
     def clean_name(self):
         #verify that the short_name is unique
-        desc = self.cleaned_data['description']
+        try:
+            desc = self.cleaned_data['description']
+        except:
+            return None
         name = re.sub('[^\w|^\-| ]', '', desc)
         name = name.replace(' ', '_')
         q = db.Query(Bmark)
