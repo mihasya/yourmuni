@@ -6,8 +6,8 @@ from google.appengine.api import users
 import re
 
 class AddBmarkForm(forms.Form):
-    name = forms.CharField(max_length=50, required=False)
     description = forms.CharField(max_length=255, required=True)
+    name = forms.CharField(max_length=50, required=False)
 
     def clean_name(self):
         #verify that the short_name is unique
