@@ -6,7 +6,7 @@ home
 
 {% block content %}
 
-<ul class="clickable">
+<ul>
 {% for bmark in bmarks %}
     <li><a href="/catch/{{ bmark.name }}">{{ bmark.desc }}</a></li>
 {% empty %}

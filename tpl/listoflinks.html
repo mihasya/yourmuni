@@ -9,7 +9,7 @@ pick an item
 {% endblock %}
 
 {% block content %}
-<ul class="clickable">
+<ul>
 {% for item in items %}
     <li><a href="{{ prefix }}/{{ item.url_piece }}">{{ item.title|safe }}</a> {{ item.desc|safe }}</li>
 {% endfor %}
