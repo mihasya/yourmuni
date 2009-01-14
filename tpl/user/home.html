@@ -8,7 +8,11 @@ home
 
 <ul>
 {% for bmark in bmarks %}
-    <li><a href="/catch/{{ bmark.name }}">{{ bmark.desc }}</a></li>
+    <li>
+        <a class="action" href="/delete/bmark/{{ bmark.name}}">delete</a>
+        <a href="/catch/{{ bmark.name }}">{{ bmark.desc }}</a>
+
+    </li>
 {% empty %}
     <p>You haven't defined any bookmarks yet. <a href="/addbmark">Get started!</a></p>
 {% endfor %}

@@ -93,6 +93,30 @@ def catch(r, bmark):
     return render_with_user('user/catch.html', params)
 
 @userRequired
+def deleteBmark(r, bmark, confirm=None):
+    q = db.Query(Bmark)
+    q.filter('name = ', bmark)
+    q.filter('user = ', users.get_current_user())
+    bm = q.get()
+    if (bm):
+        if (confirm):
+            bm.delete()
+            return HttpResponseRedirect('/')
+        else:
+            resource = {
+                'type': 'bookmark',
+                'desc': bm.desc
+            }
+            params = {
+                'resource' : resource,
+                'confirm_url': (r.build_absolute_uri()+'/confirm'),
+                'cancel_url': '/'
+            }
+            return render_with_user('user/delete.html', params)
+    else:
+        return home(r)
+    
+@userRequired
 def clearCache(r):
     import logging
     from google.appengine.api import memcache
