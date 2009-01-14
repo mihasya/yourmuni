@@ -17,17 +17,23 @@ a {
 ul {
     margin: 0;
     padding: 0;
-    border-top: 1px solid #dfdfdf;
 }
 ul li {
     list-style: none;
-    border-bottom: 1px solid #dfdfdf;
 }
 ul li a {
+}
+ul.clickable {
+    border-top: 1px solid #dfdfdf;
+}
+ul.clickable li {
+    border-bottom: 1px solid #dfdfdf;
+}
+ul.clickable li a {
     padding: 1em;
     text-decoration: none;
     display: block;
-    font-weight: bold;
+    font-weight: bold;    
 }
 #authbar {
     padding: .5em 1em;
