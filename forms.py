@@ -3,6 +3,7 @@ from models import Bmark
 from google.appengine.ext import db
 from django.utils.translation import ugettext_lazy as _
 from google.appengine.api import users
+from django.template.defaultfilters import slugify
 import re
 
 class AddBmarkForm(forms.Form):
@@ -11,9 +12,7 @@ class AddBmarkForm(forms.Form):
 
     def clean_description(self):
         desc = self.cleaned_data['description']
-
-        name = re.sub('[^\w|^\-| ]', '', desc)
-        name = name.replace(' ', '_')
+        name = slugify(desc).decode()
         q = db.Query(Bmark)
         q.filter('name =', name)
         q.filter('user =', users.get_current_user())
