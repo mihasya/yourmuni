@@ -71,5 +71,4 @@ def addStop(r, bmark, re=None, agency=None, route=None,
 
 @userRequired
 def addStopDflt(r, bmark):
-    url='/addstop/nb/'+bmark+'/'+getDefaultRegion()+'/'+getDefaultAgency()
-    return HttpResponseRedirect(url)
+    return addStop(r, bmark, getDefaultRegion(), getDefaultAgency())
