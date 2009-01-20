@@ -1,0 +1,21 @@
+{% extends "master.html" %}
+{% block title %}
+catching {{ times.route }} @ {{ times.stop }}
+{% endblock %}
+{% block content %}
+<h1>{{ times.route }} @ {{ times.stop }}</h1>
+<p>
+    {% for time in times.times %}
+    {% if forloop.first %}
+        <strong>{{ time }}</strong>
+    {% else %}
+    , {{ time }}
+    {% endif %}
+    {% if forloop.last %}
+        minutes
+    {% endif %}
+    {% empty %}
+        No times available
+    {% endfor %}
+</p>
+{% endblock %}

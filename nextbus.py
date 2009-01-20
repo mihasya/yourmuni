@@ -72,3 +72,40 @@ def addStop(r, bmark, re=None, agency=None, route=None,
 @userRequired
 def addStopDflt(r, bmark):
     return addStop(r, bmark, getDefaultRegion(), getDefaultAgency())
+
+def catchStop(r, re=None, agency=None, route=None, direction=None, stop=None):
+    error = ''
+    if (stop is not None):
+        url = nextbus.timeURL % (agency, route, direction, stop)
+        times = nextbus.getTimeURL(url)
+        params = {
+            'times': times
+        }
+        return render_with_user('single.html', params)
+    if (direction is not None):
+        data = nextbus.getStops(agency, route, direction)
+        prefix = '/catchstop/nb/%s/%s/%s/%s'\
+            % (re, agency, route, direction)
+        subtitle = 'pick a stop'
+    elif (route is not None):
+        data = nextbus.getDirections(agency, route)
+        prefix = '/catchstop/nb/%s/%s/%s' % (re, agency, route)
+        subtitle = 'pick a direction'
+    elif (agency is not None):
+        data = nextbus.getRoutes(agency)
+        prefix = '/catchstop/nb/%s/%s' % (re, agency)
+        subtitle = 'pick a route'
+    items = []
+    if not (data):
+        #todo: throw 500
+        return False
+    for key, value in data:
+        items.append({'url_piece': key, 'title': value})
+    params = { 'items':items,
+               'prefix': prefix,
+               'subtitle': subtitle,
+               'error': error }
+    return render_with_user('listoflinks.html', params)
+    
+def catchStopDflt(r):
+    return catchStop(r, getDefaultRegion(), getDefaultAgency())
