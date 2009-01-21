@@ -1,18 +1,7 @@
-{% extends "master.html" %}
-
-{% block title %}
-{% if subtitle %}
-{{ subtitle }}
-{% else %}
-pick an item
-{% endif %}
-{% endblock %}
-
-{% block content %}
 <ul>
 {% for item in items %}
     <li><a href="{{ prefix }}/{{ item.url_piece }}">{{ item.title|safe }}</a> {{ item.desc|safe }}</li>
+{% empty %}
+    <li>Nothing to display</li>
 {% endfor %}
 </ul>
-
-{% endblock %}

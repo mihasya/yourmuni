@@ -1,5 +1,6 @@
 from views import userRequired, render_with_user
 from django.http import HttpResponseRedirect
+from django.template import loader, Context
 from lib import nextbus
 import google.appengine.ext.db as db
 from models import Bmark, Stop
@@ -36,6 +37,7 @@ def addStop(r, bmark, re=None, agency=None, route=None,
         if (stopObj):
             logging.info("Stop Already Exists")
             error = "This stop has already been added"
+            #it'll fall through to picking a stop again
         else:
             stopObj = Stop()
             stopObj.bmark = b
@@ -48,26 +50,29 @@ def addStop(r, bmark, re=None, agency=None, route=None,
         data = nextbus.getStops(agency, route, direction)
         prefix = '/addstop/nb/%s/%s/%s/%s/%s'\
             % (bmark, re, agency, route, direction)
-        subtitle = 'pick a stop'
+        instructions = 'pick a stop'
     elif (route is not None):
         data = nextbus.getDirections(agency, route)
         prefix = '/addstop/nb/%s/%s/%s/%s' % (bmark, re, agency, route)
-        subtitle = 'pick a direction'
+        instructions = 'pick a direction'
     elif (agency is not None):
         data = nextbus.getRoutes(agency)
         prefix = '/addstop/nb/%s/%s/%s' % (bmark, re, agency)
-        subtitle = 'pick a route'
+        instructions = 'pick a route'
     items = []
     if not (data):
         #todo: throw 500
         return False
     for key, value in data:
         items.append({'url_piece': key, 'title': value})
-    params = { 'items':items,
-               'prefix': prefix,
-               'subtitle': subtitle,
+    t = loader.get_template('listoflinks.html')
+    c = Context({ 'items':items, 'prefix': prefix })
+    items_t = t.render(c)
+    params = { 'prefix': prefix,
+               'instructions': instructions,
+               'list': items_t,
                'error': error }
-    return render_with_user('listoflinks.html', params)
+    return render_with_user('user/addstop.html', params)
 
 @userRequired
 def addStopDflt(r, bmark):
