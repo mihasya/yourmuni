@@ -1,4 +1,4 @@
-from views import userRequired, render_with_user
+from shared import userRequired, render_with_user
 from django.http import HttpResponseRedirect
 from django.template import loader, Context
 from lib import nextbus

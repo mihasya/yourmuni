@@ -5,16 +5,13 @@ from models import *
 from forms import *
 import google.appengine.ext.db
 from lib import nextbus
+from shared import userRequired, render_with_user
 
 defaultSource='nb'
 
 def getDefaultSource():
     """return the default source site for user (nextbus for now)"""
     return defaultSource
-
-def render_with_user(tpl, vars={}):
-    vars['user'] = users.get_current_user()
-    return render_to_response(tpl, vars)
     
 def home(r):    
     user = users.get_current_user()
@@ -34,20 +31,6 @@ def login(r):
 def logout(r):
     return HttpResponseRedirect(users.create_logout_url('/'))
     
-
-
-def userRequired(fn):
-    """decorator for forcing a login"""
-    def new(*args, **kws):
-        user = users.get_current_user()
-        if not (user):
-            r = args[0]
-            return HttpResponseRedirect(users.create_login_url(
-                                            r.build_absolute_uri()))
-        else:
-            return fn(*args, **kws)
-    return new
-
 @userRequired    
 def addBmark(r):
     if (r.method) == 'POST':
