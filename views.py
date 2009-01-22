@@ -4,7 +4,7 @@ from django.http import HttpResponseRedirect
 from models import *
 from forms import *
 import google.appengine.ext.db
-from lib import nextbus
+import nextbus
 from shared import userRequired, render_with_user
 
 defaultSource='nb'

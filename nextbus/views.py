@@ -1,7 +1,7 @@
 from shared import userRequired, render_with_user
 from django.http import HttpResponseRedirect
 from django.template import loader, Context
-from lib import nextbus
+import nextbus
 import google.appengine.ext.db as db
 from models import Bmark, Stop
 import logging
