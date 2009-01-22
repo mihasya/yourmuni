@@ -63,7 +63,7 @@ def catch(r, bmark):
         else:
             error = "Some stops could not be retreived"
 
-    links = [ { 'url':'/addstop/nb/%s/_dflt' % (bmark), 'title':'add a stop' },
+    links = [ { 'url':'/nb/addstop/%s/_dflt' % (bmark), 'title':'add a stop' },
               { 'url':'/catch/%s' % bmark, 'title':'reload'}]
 
     params = {

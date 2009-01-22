@@ -48,16 +48,16 @@ def addStop(r, bmark, re=None, agency=None, route=None,
             return HttpResponseRedirect('/catch/%s' % (bmark))
     if (direction is not None):
         data = nextbus.getStops(agency, route, direction)
-        prefix = '/addstop/nb/%s/%s/%s/%s/%s'\
+        prefix = '/nb/addstop/%s/%s/%s/%s/%s'\
             % (bmark, re, agency, route, direction)
         instructions = 'pick a stop'
     elif (route is not None):
         data = nextbus.getDirections(agency, route)
-        prefix = '/addstop/nb/%s/%s/%s/%s' % (bmark, re, agency, route)
+        prefix = '/nb/addstop/%s/%s/%s/%s' % (bmark, re, agency, route)
         instructions = 'pick a direction'
     elif (agency is not None):
         data = nextbus.getRoutes(agency)
-        prefix = '/addstop/nb/%s/%s/%s' % (bmark, re, agency)
+        prefix = '/nb/addstop/%s/%s/%s' % (bmark, re, agency)
         instructions = 'pick a route'
     items = []
     if not (data):
