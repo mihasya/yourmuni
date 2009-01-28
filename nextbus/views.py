@@ -89,28 +89,31 @@ def catchStop(r, re=None, agency=None, route=None, direction=None, stop=None):
         return render_with_user('single.html', params)
     if (direction is not None):
         data = nextbus.getStops(agency, route, direction)
-        prefix = '/catchstop/nb/%s/%s/%s/%s'\
+        prefix = '/nb/catchstop/%s/%s/%s/%s'\
             % (re, agency, route, direction)
-        subtitle = 'pick a stop'
+        instructions = 'pick a stop'
     elif (route is not None):
         data = nextbus.getDirections(agency, route)
-        prefix = '/catchstop/nb/%s/%s/%s' % (re, agency, route)
-        subtitle = 'pick a direction'
+        prefix = '/nb/catchstop/%s/%s/%s' % (re, agency, route)
+        instructions = 'pick a direction'
     elif (agency is not None):
         data = nextbus.getRoutes(agency)
-        prefix = '/catchstop/nb/%s/%s' % (re, agency)
-        subtitle = 'pick a route'
+        prefix = '/nb/catchstop/%s/%s' % (re, agency)
+        instructions = 'pick a route'
     items = []
     if not (data):
         #todo: throw 500
         return False
     for key, value in data:
         items.append({'url_piece': key, 'title': value})
-    params = { 'items':items,
-               'prefix': prefix,
-               'subtitle': subtitle,
+        
+    t = loader.get_template('listoflinks.html')
+    c = Context({ 'items':items, 'prefix': prefix })
+    items_t = t.render(c)
+    params = { 'instructions': instructions,
+               'list':items_t,
                'error': error }
-    return render_with_user('listoflinks.html', params)
+    return render_with_user('user/addstop.html', params)
     
 def catchStopDflt(r):
     return catchStop(r, getDefaultRegion(), getDefaultAgency())
