@@ -1,11 +1,14 @@
 from google.appengine.api import users
 from django.shortcuts import render_to_response
 from django.http import HttpResponseRedirect
+from django.template import loader, Context
 from models import *
 from forms import *
 import google.appengine.ext.db
 import nextbus
 from shared import userRequired, render_with_user
+
+from nextbus.views import getDefaultRegion, getDefaultAgency
 
 defaultSource='nb'
 
@@ -13,17 +16,32 @@ def getDefaultSource():
     """return the default source site for user (nextbus for now)"""
     return defaultSource
     
-def home(r):    
+def home(r):
+    re = getDefaultRegion()
+    agency = getDefaultAgency()
     user = users.get_current_user()
+    data = nextbus.getRoutes(agency)
+    prefix = '/nb/catchstop/%s/%s' % (re, agency)
+    instructions = 'pick a route'
+    items = []
+    if not (data):
+        pass
+    for key, value in data:
+        items.append({'url_piece': key, 'title': value})
+
+    t = loader.get_template('listoflinks.html')
+    c = Context({ 'items':items, 'prefix': prefix })
+    items_t = t.render(c)
+
     if (user):
         q = db.Query(Bmark)
         q.filter('user = ', user)
         bmarks = q.fetch(limit=200)
         links = [ { 'url':'/addbmark', 'title':'add a bookmark' } ]
-        param = { 'bmarks': bmarks, 'links': links }
+        param = { 'bmarks': bmarks, 'links': links, 'list': items_t }
         return render_with_user('user/home.html', param)
     else:
-        return render_to_response('splash.html');
+        return render_to_response('splash.html', { 'list': items_t });
 
 def login(r):
     return HttpResponseRedirect(users.create_login_url('/'))
