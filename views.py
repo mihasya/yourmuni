@@ -57,7 +57,7 @@ def addBmark(r):
             bm.name = form.cleaned_data['name']
             bm.desc = form.cleaned_data['description']
             bm.put()
-            url = '/addstop/'+getDefaultSource()+'/'+bm.name+'/_dflt'
+            url = getDefaultSource()+'/addstop/'+bm.name+'/_dflt'
             return HttpResponseRedirect(url)
     else:
         form = AddBmarkForm()
