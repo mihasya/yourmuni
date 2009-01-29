@@ -147,8 +147,23 @@ def getRegions():
     return scrapeRegions()
     
 def getAgencies(region):
-    """TODO: add caching"""
-    return scrapeAgencies(region)
+    key = "agencies_%s" % region
+    agencies = memcache.get(key)
+    if (agencies):
+        logging.info("Got agencies from memcache")
+        return pickle.loads(agencies)
+    else:
+        agencies = scrapeAgencies(region)
+        if not (agencies)
+            return False
+        else:
+            try:
+                logging.info("Saving agencies to memcache")
+                value = pickle.dumps(agencies)
+                memcache.set(key, value, 60*60*24)
+            except:
+                logging.error("FAIL: Saving agencies to memcache")
+            return agencies
     
 def getRoutes(agency):
     key = "routes_%s" % (agency)
