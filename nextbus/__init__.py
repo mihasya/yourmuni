@@ -154,7 +154,7 @@ def getAgencies(region):
         return pickle.loads(agencies)
     else:
         agencies = scrapeAgencies(region)
-        if not (agencies)
+        if not (agencies):
             return False
         else:
             try:
