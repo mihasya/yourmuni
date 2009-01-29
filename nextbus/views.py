@@ -6,19 +6,6 @@ import google.appengine.ext.db as db
 from models import Bmark, Stop
 import logging
 
-defaultRegion='California-Northern'
-defaultAgency='sf-muni'
-
-
-def getDefaultRegion():
-    """return the default region for user (norcal for now)"""
-    return defaultRegion
-
-def getDefaultAgency():
-    """return the default agency for the user (sf-muni for now)"""
-    return defaultAgency
-
-
 
 @userRequired 
 def addStop(r, bmark, re=None, agency=None, route=None, 
@@ -76,7 +63,8 @@ def addStop(r, bmark, re=None, agency=None, route=None,
 
 @userRequired
 def addStopDflt(r, bmark):
-    return addStop(r, bmark, getDefaultRegion(), getDefaultAgency())
+    return addStop(r, bmark, nextbus.getDefaultRegion(),\
+                                                    nextbus.getDefaultAgency())
 
 def catchStop(r, re=None, agency=None, route=None, direction=None, stop=None):
     error = ''
@@ -116,4 +104,4 @@ def catchStop(r, re=None, agency=None, route=None, direction=None, stop=None):
     return render_with_user('user/addstop.html', params)
     
 def catchStopDflt(r):
-    return catchStop(r, getDefaultRegion(), getDefaultAgency())
+    return catchStop(r, nextbus.getDefaultRegion(), nextbus.getDefaultAgency())

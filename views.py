@@ -8,8 +8,6 @@ import google.appengine.ext.db
 import nextbus
 from shared import userRequired, render_with_user
 
-from nextbus.views import getDefaultRegion, getDefaultAgency
-
 defaultSource='nb'
 
 def getDefaultSource():
@@ -17,8 +15,8 @@ def getDefaultSource():
     return defaultSource
     
 def home(r):
-    re = getDefaultRegion()
-    agency = getDefaultAgency()
+    re = nextbus.getDefaultRegion()
+    agency = nextbus.getDefaultAgency()
     user = users.get_current_user()
     data = nextbus.getRoutes(agency)
     prefix = '/nb/catchstop/%s/%s' % (re, agency)

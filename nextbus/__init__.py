@@ -41,6 +41,17 @@ regions = [
 'Wyoming'
 ]
 
+defaultRegion='California-Northern'
+defaultAgency='sf-muni'
+
+def getDefaultRegion():
+    """return the default region for user (norcal for now)"""
+    return defaultRegion
+
+def getDefaultAgency():
+    """return the default agency for the user (sf-muni for now)"""
+    return defaultAgency
+
 
 def scrapeList(url):
     """the lists are all identical (in theory...)"""
